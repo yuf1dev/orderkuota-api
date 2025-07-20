@@ -1,5 +1,5 @@
 <?php
-require 'src/OrderKouta.php';
+require 'src/OrderKuota.php';
 
 use YuF1Dev\OrderKuota;
 
