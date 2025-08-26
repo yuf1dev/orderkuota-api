@@ -65,7 +65,6 @@ class OrderKuota
             'Host: ' . self::HOST,
             'User-Agent: ' . self::USER_AGENT,
             'Content-Type: application/x-www-form-urlencoded',
-            'Signature: aff9fa601fba85b2b2b686aff870d7b5d33311c44061b78e997acf2729abdf2b2f611e1db70ea5aa5439ae7c78858427eac151316629e9a2dc6f22fd32cb8c06',
         );
         return $headers;
     }
