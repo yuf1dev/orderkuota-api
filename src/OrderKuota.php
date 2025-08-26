@@ -6,17 +6,21 @@ namespace YuF1Dev;
  * [OrderKuota] OrderKuota Api PHP Class (Un-Official)
  * Author : YuF1Dev <https://github.com/yuf1dev>
  * Created at 10-10-2023 00:22
- * Last Modified at 28-06-2025 23:18
+ * Last Modified at 26-08-2025 23:18
  */
 class OrderKuota
 {
     const API_URL = 'https://app.orderkuota.com:443/api/v2';
+    const API_URL_EWALLET = 'https://checker.orderkuota.com:443/api/checkname/produk/095f701f85/11/1263871';
     const API_URL_ORDER = 'https://app.orderkuota.com:443/api/v2/order';
     const HOST = 'app.orderkuota.com';
-    const USER_AGENT = 'okhttp/4.10.0';
-    const APP_VERSION_NAME = '25.03.14';
-    const APP_VERSION_CODE = '250314';
+    const USER_AGENT = 'okhttp/4.12.0';
+    const APP_VERSION_NAME = '25.08.11';
+    const APP_VERSION_CODE = '250811';
     const APP_REG_ID = 'di309HvATsaiCppl5eDpoc:APA91bFUcTOH8h2XHdPRz2qQ5Bezn-3_TaycFcJ5pNLGWpmaxheQP9Ri0E56wLHz0_b1vcss55jbRQXZgc9loSfBdNa5nZJZVMlk7GS1JDMGyFUVvpcwXbMDg8tjKGZAurCGR4kDMDRJ';
+    const PHONE_MODEL = 'SM-G960N';
+    const PHONE_UUID = 'di309HvATsaiCppl5eDpoc';
+    
 
     private $authToken, $username;
 
@@ -44,13 +48,13 @@ class OrderKuota
 
     public function getTransactionQris($type = '')
     {
-        $payload = "auth_token=" . $this->authToken . "&auth_username=" . $this->username . "&requests%5Bqris_history%5Bjumlah%5D=&requests%5Bqris_history%5D%5Bjenis%5D=" . $type . "&requests%5Bqris_history%5D%5Bpage%5D=1&requests%5Bqris_history%5D%5Bdari_tanggal%5D=&requests%5Bqris_history%5D%5Bke_tanggal%5D=&requests%5Bqris_history%5D%5Bketerangan%5D=&requests%5B0%5D=account&app_version_name=" . self::APP_VERSION_NAME . "&app_version_code=" . self::APP_VERSION_CODE . "&app_reg_id=" . self::APP_REG_ID . "";
+        $payload = "request_time=".time()."&app_reg_id=" . self::APP_REG_ID . "&phone_android_version=9&app_version_code=" . self::APP_VERSION_CODE . "&phone_uuid=" . self::PHONE_UUID . "&auth_username=" . $this->username . "&requests[1]=point&auth_token=" . $this->authToken . "&app_version_name=" . self::APP_VERSION_NAME . "&ui_mode=light&requests[0]=account&phone_model=" . self::PHONE_MODEL . "";
         return self::Request("POST", self::API_URL . '/get', $payload, true);
     }
 
     public function withdrawalQris($amount = '')
     {
-        $payload = "app_reg_id=" . self::APP_REG_ID . "&app_version_code=" . self::APP_VERSION_CODE . "&auth_username=" . $this->username . "&requests[qris_withdraw][amount]=" . $amount . "&auth_token=" . $this->authToken . "&app_version_name=" . self::APP_VERSION_NAME . "";
+        $payload = "request_time=".time()."&app_reg_id=" . self::APP_REG_ID . "&phone_android_version=9&app_version_code=" . self::APP_VERSION_CODE . "&phone_uuid=" . self::PHONE_UUID . "&auth_username=" . $this->username . "&requests[qris_withdraw][amount]=" . $amount . "&auth_token=" . $this->authToken . "&app_version_name=" . self::APP_VERSION_NAME . "&ui_mode=light&requests[0]=account&phone_model=" . self::PHONE_MODEL . "";
         return self::Request("POST", self::API_URL . '/get', $payload, true);
     }
 
@@ -61,6 +65,7 @@ class OrderKuota
             'Host: ' . self::HOST,
             'User-Agent: ' . self::USER_AGENT,
             'Content-Type: application/x-www-form-urlencoded',
+            'Signature: aff9fa601fba85b2b2b686aff870d7b5d33311c44061b78e997acf2729abdf2b2f611e1db70ea5aa5439ae7c78858427eac151316629e9a2dc6f22fd32cb8c06',
         );
         return $headers;
     }
